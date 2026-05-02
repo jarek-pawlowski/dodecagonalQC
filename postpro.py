@@ -8,7 +8,7 @@ evecs = np.load(prefix+'evecs.npy')
 sublattices_cut = np.load(prefix+'sublattices.npy')
 global_indices = np.load(prefix+'indices.npy')
 
-utils.plot_density(evecs[:,5], sublattices_cut, global_indices, filename='dodecagonal_graphene_eigenstate_density.png')
+utils.plot_density(evecs[:,3976], sublattices_cut, global_indices, filename='dodecagonal_graphene_eigenstate_density.png')
 
 es = np.linspace(evals.min(), evals.max(), 500)
 dos = np.zeros(500)
@@ -25,8 +25,15 @@ for sj, s in enumerate(sublattices_cut):
 rs = np.array(rs)
 gs = np.array(gs)
 rse = []
-for evec in evecs.T:
-    rse.append((rs*np.abs(evec[gs])**2).sum()/R2)
+lre = 1.
+ilre = -1
+for ie, evec in enumerate(evecs.T):
+    re=(rs*np.abs(evec[gs])**2).sum()/R2
+    rse.append(re)
+    if re < lre: 
+        lre = re
+        ilre = ie
+print(ilre, lre)
 
 fig, ax = plt.subplots(figsize=(7, 4))
 ax.plot(es, dos, label='DOS', color='blue')
