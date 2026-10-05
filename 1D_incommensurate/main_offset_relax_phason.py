@@ -191,6 +191,43 @@ spectra = hessian_spectral_maps(
     normalize_sublattices=True,
 )
 
+# ---------------------------------------------------------------------
+# Save input for nonlinear Hamiltonian phason dynamics
+# ---------------------------------------------------------------------
+
+np.savez(
+    results_path + "phason_dynamics_input.npz",
+
+    # relaxed equilibrium configuration
+    X0=x_mid,
+
+    # microscopic phason Goldstone tangent
+    v_ph=v_full,
+
+    # Hessian -- not needed for nonlinear dynamics,
+    # but useful for comparison
+    H=H_mid,
+
+    # sublattice information
+    labels=labels,
+
+    # microscopic model parameters
+    R_A=R_A,
+    R_B=R_B,
+    K_intra=np.asarray(K_intra),
+    V_inter=V_inter,
+    sigma_inter=sigma_inter,
+
+    # useful metadata
+    offset=offsets[mid],
+    system_size=system_size,
+)
+
+print(
+    "Saved nonlinear dynamics input to:",
+    results_path + "phason_dynamics_input.npz"
+)
+
 # Relative A-B Fourier content.
 plot_hessian_spectral_map(
     k_values_spec,

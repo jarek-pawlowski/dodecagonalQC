@@ -2,8 +2,7 @@ __pycache__
 0.0
 m2.0
 *.npy
-results
+results*
 electronic_results
 old
-results_offset_scan
-test
+test*
